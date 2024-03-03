@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 00:01:47 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/03 18:44:46 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/03 19:23:02 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int	ph_eat(t_philosopher *self)
 	struct timeval	tv;
 
 	self->eat_count++;
-	printf("%ld %d is eating\n", time_ref(to_long(tv), 0) / 1000, self->id);
 	gettimeofday(&tv, NULL);
+	printf("%ld %d is eating\n", time_ref(to_long(tv), 0) / 1000, self->id);
 	self->life_time = to_long(tv) + self->table->time_to_die;
 	if (self->table->time_to_eat > self->life_time)
 	{
@@ -85,11 +85,15 @@ int	ph_think(t_philosopher *self)
 	{
 		if (get_fork(self, self->forks[(self->id + 1) % 2]) == 0)
 			continue ;
-		if ((is_dead(self) || get_fork(self, self->forks[self->id  % 2]) == 0))
+		if (is_dead(self))
 		{
 			drop_fork(self->forks[(self->id + 1) % 2]);
-			continue ;
+			break ;
 		}
+		if (get_fork(self, self->forks[self->id % 2]) == 0)
+			drop_fork(self->forks[(self->id + 1) % 2]);
+		else
+			break ;
 	}
-	return (!self->is_dead);
+	return (!*self->stop);
 }

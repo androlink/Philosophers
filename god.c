@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 03:34:01 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/03 15:54:01 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/03 21:13:11 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	god(t_table *table)
 	}
 	else
 	{
-		printf("[GOD] :  success lifes\n");
 		table->start = 1;
 		manage_life(table);
 	}
