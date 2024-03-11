@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 00:14:29 by gcros             #+#    #+#             */
-/*   Updated: 2024/02/29 03:36:53 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/11 16:08:30 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ const char	*str_quit(t_exit_code code)
 	[bad_arg] = "<number_of_philosophers> <time_to_die> <time_to_eat>"
 		" <time_to_sleep>"
 		" [number_of_times_each_philosopher_must_eat]",
+	[init_failed] = "bad thing append",
 	};
 
 	return (strs[code]);

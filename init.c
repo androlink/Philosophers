@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 23:34:47 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/11 14:23:48 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/11 16:29:22 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	init_forks(t_fork *forks, int count);
 int	init_philos(t_table	*table, int count);
+int	get_times(t_table	*table, int ac, char **av);
 
 int	init_table(t_table	*table, int ac, char **av)
 {
@@ -23,15 +24,9 @@ int	init_table(t_table	*table, int ac, char **av)
 	memset(table, '\0', sizeof(t_table));
 	table->forks_number = n;
 	table->phi_number = n;
-	table->time_to_die = ft_atoi(av[2]) * 1000;
-	table->time_to_eat = ft_atoi(av[3]) * 1000;
-	table->time_to_sleep = ft_atoi(av[4]) * 1000;
-	if (ac == 6)
-		table->eat_count = ft_atoi(av[5]);
-	else
-		table->eat_count = __LONG_MAX__;
-	if (table->time_to_die < 0 || table->time_to_eat < 0
-		|| table->time_to_sleep < 0 || table->eat_count < 0 || n < 0)
+	if (get_times(table, ac, av) == 0)
+		return (0);
+	if (pthread_mutex_init(&table->p_mut, NULL))
 		return (0);
 	table->forks = malloc(n * sizeof(t_fork));
 	if (table->forks == NULL)
@@ -42,6 +37,21 @@ int	init_table(t_table	*table, int ac, char **av)
 	if (table->philosophers == NULL)
 		return ((long)(table->forks = NULL));
 	return (init_forks(table->forks, n) && init_philos(table, n));
+}
+
+int	get_times(t_table	*table, int ac, char **av)
+{
+	table->time_to_die = ft_atoi(av[2]) * 1000;
+	table->time_to_eat = ft_atoi(av[3]) * 1000;
+	table->time_to_sleep = ft_atoi(av[4]) * 1000;
+	if (ac == 6)
+		table->eat_count = ft_atoi(av[5]);
+	else
+		table->eat_count = __LONG_MAX__;
+	if (table->time_to_die < 0 || table->time_to_eat < 0
+		|| table->time_to_sleep < 0 || table->eat_count < 0)
+		return (0);
+	return (1);
 }
 
 int	init_forks(t_fork *forks, int count)
