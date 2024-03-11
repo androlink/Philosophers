@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:34:50 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/11 16:34:35 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/11 19:26:52 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	fuck_it_him_out(t_philo *self, long time)
 {
 	printf("fuck life %d\n", self->id);
-	usleep(time);
 	self->is_dead = 1;
 	*self->stop = 1;
+	usleep(time);
 }
 
 int	is_dead(t_philosopher *self)
@@ -27,9 +27,11 @@ int	is_dead(t_philosopher *self)
 	gettimeofday(&tmp, NULL);
 	if ((to_long(tmp)) > self->life_time)
 	{
+		
 		if (*self->stop == 0)
 			self->is_dead = 1;
 		*self->stop = 1;
+		
 	}
 	return (self->is_dead || *self->stop);
 }
