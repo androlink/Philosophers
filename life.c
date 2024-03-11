@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:34:50 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/03 18:43:27 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/11 13:05:23 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,16 @@ void	*born(t_philosopher *self)
 {
 	struct timeval	tmp;
 
+	while (self->table->start == 0)
+	{
+		if (self->table->stop == 1)
+			return (NULL);
+	}
 	ph_life(self);
 	if (self->is_dead == 1)
 	{
 		gettimeofday(&tmp, NULL);
 		printf("%ld %d died\n", time_ref(to_long(tmp), 0) / 1000, self->id);
 	}
+	return (NULL);
 }

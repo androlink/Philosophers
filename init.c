@@ -6,14 +6,14 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 23:34:47 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/02 03:12:01 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/11 14:23:48 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 int	init_forks(t_fork *forks, int count);
-int	init_philos(t_table	*table, char **av, int count);
+int	init_philos(t_table	*table, int count);
 
 int	init_table(t_table	*table, int ac, char **av)
 {
@@ -23,24 +23,25 @@ int	init_table(t_table	*table, int ac, char **av)
 	memset(table, '\0', sizeof(t_table));
 	table->forks_number = n;
 	table->phi_number = n;
-	table->forks = malloc(n * sizeof(t_fork));
-	table->philosophers = malloc(n * sizeof(t_phi));
-	if (table->forks == NULL || table->philosophers == NULL)
-	{
-		free(table->philosophers);
-		free(table->forks);
-		return (0);
-	}
 	table->time_to_die = ft_atoi(av[2]) * 1000;
 	table->time_to_eat = ft_atoi(av[3]) * 1000;
 	table->time_to_sleep = ft_atoi(av[4]) * 1000;
 	if (ac == 6)
 		table->eat_count = ft_atoi(av[5]);
 	else
-		table->eat_count = __SIZE_MAX__;
-	if (init_forks(table->forks, n) || init_philos(table, av, n))
-		return (1);
-	return (0);
+		table->eat_count = __LONG_MAX__;
+	if (table->time_to_die < 0 || table->time_to_eat < 0
+		|| table->time_to_sleep < 0 || table->eat_count < 0 || n < 0)
+		return (0);
+	table->forks = malloc(n * sizeof(t_fork));
+	if (table->forks == NULL)
+		return (0);
+	table->philosophers = malloc(n * sizeof(t_phi));
+	if (table->philosophers == NULL)
+		free(table->forks);
+	if (table->philosophers == NULL)
+		return ((long)(table->forks = NULL));
+	return (init_forks(table->forks, n) && init_philos(table, n));
 }
 
 int	init_forks(t_fork *forks, int count)
@@ -52,15 +53,15 @@ int	init_forks(t_fork *forks, int count)
 	while (i < count)
 	{
 		if (pthread_mutex_init(&forks[i]._mut, NULL))
-			return (1);
+			return (0);
 		forks[i]._lock = 0;
 		forks[i].id = i + 1;
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
-int	init_philos(t_table	*table, char **av, int count)
+int	init_philos(t_table	*table, int count)
 {
 	int	i;
 
@@ -75,5 +76,5 @@ int	init_philos(t_table	*table, char **av, int count)
 		table->philosophers[i].id = i + 1;
 		i++;
 	}
-	return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 03:34:01 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/03 21:13:11 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/11 13:33:58 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ int	take_life(t_philosopher *phi, int count)
 
 int	manage_life(t_table *table)
 {
-	int	count;
-	int	i;
+	size_t	count;
+	size_t	i;
 
 	while (!table->stop)
 	{
@@ -59,6 +59,7 @@ int	manage_life(t_table *table)
 		if (count == i)
 			table->stop = 1;
 	}
+	return (1);
 }
 
 int	god(t_table *table)

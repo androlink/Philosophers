@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 05:55:30 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/03 18:25:33 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/11 14:16:54 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@
 # include <errno.h>
 # include <unistd.h>
 
+#define DEBUG_PRINT printf("file %s line %d\n", __FILE__, __LINE__);
+
 typedef	enum e_exit_code
 {
 	good_exit,
 	bad_arg,
+	init_failed,
 }	t_exit_code;
 
 typedef struct s_fork
@@ -48,7 +51,7 @@ typedef struct s_philosopher
 		};
 		t_fork	*forks[2];
 	};
-	size_t		eat_count;
+	long		eat_count;
 	suseconds_t	life_time;
 	pthread_t	thread;
 	int			is_dead;
@@ -65,7 +68,7 @@ typedef struct s_table
 	suseconds_t		time_to_die;
 	suseconds_t		time_to_eat;
 	suseconds_t		time_to_sleep;
-	size_t			eat_count;
+	long			eat_count;
 	int				stop;
 	int				start;
 }	t_table;
