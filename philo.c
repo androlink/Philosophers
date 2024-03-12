@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 05:55:27 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/11 16:12:18 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/12 16:53:10 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(int ac, char **av)
 	t_table		table;
 	t_exit_code	code;
 
+	write(1, "lol\n", 4);
 	code = good_exit;
 	if (ac != 5 && ac != 6)
 		quit(bad_arg);

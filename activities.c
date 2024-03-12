@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 00:01:47 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/11 19:25:44 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/12 16:15:44 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void	ph_life(t_philosopher *self)
 	gettimeofday(&tmp, NULL);
 	self->life_time = to_long(tmp) + self->table->time_to_die;
 	while (*self->stop == 0 && !is_dead(self))
-		(void) (ph_think(self) && ph_eat(self) && !is_dead(self) && ph_sleep(self));
+		if (ph_think(self))
+			if (ph_eat(self))
+				if (!is_dead(self))
+					ph_sleep(self);
 }
 
 int	get_fork(t_philosopher *self, t_fork *fork)
