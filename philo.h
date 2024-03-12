@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 05:55:30 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/11 16:28:47 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/12 22:07:56 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,22 @@ typedef struct s_philosopher
 	int			is_dead;
 	int			*stop;
 	t_table		*table;
+	pthread_mutex_t	_mut;
 } t_philosopher, t_phi,	t_philo;
 
 typedef struct s_table
 {
 	t_philosopher	*philosophers;
 	t_fork			*forks;
-	size_t			forks_number;
-	size_t			phi_number;
+	size_t			number;
 	suseconds_t		time_to_die;
 	suseconds_t		time_to_eat;
 	suseconds_t		time_to_sleep;
 	long			eat_count;
 	int				stop;
 	int				start;
-	pthread_mutex_t	p_mut;
+	pthread_mutex_t	stop_mut;
+	pthread_mutex_t	start_mut;
 }	t_table;
 
 void		quit(t_exit_code code);
@@ -87,6 +88,8 @@ long		time_ref(long test, long set);
 void		drop_fork(t_fork *fork);
 int			pick_fork(t_fork *fork);
 int			is_dead(t_philosopher *self);
+int			check_stop(t_table *table);
+int			check_start(t_table *table);
 
 int			god(t_table *table);
 void		ph_life(t_philosopher *me);

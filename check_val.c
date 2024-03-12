@@ -1,38 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   check_val.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 05:55:27 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/12 21:41:23 by gcros            ###   ########.fr       */
+/*   Created: 2024/03/12 17:32:08 by gcros             #+#    #+#             */
+/*   Updated: 2024/03/12 18:20:35 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/*
- * <number_of_philosophers>
- * <time_to_die>
- * <time_to_eat>
- * <time_to_sleep>
- * number_of_times_each_philosopher_must_eat]
- */
-int	main(int ac, char **av)
+int	check_stop(t_table *table)
 {
-	t_table		table;
-	t_exit_code	code;
+	int	val;
 
-	write(1, "lol\n", 4);
-	code = good_exit;
-	if (ac != 5 && ac != 6)
-		quit(bad_arg);
-	if (!init_table(&table, ac, av))
-		quit(init_failed);
-	if (code == good_exit)
-		god(&table);
-	destroy_table(&table);
-	quit(code);
+	pthread_mutex_lock(&table->stop_mut);
+	val = table->stop;	
+	pthread_mutex_unlock(&table->stop_mut);
+	return (val);
+}
+
+int	check_start(t_table *table)
+{
+	int	val;
+
+	pthread_mutex_lock(&table->start_mut);
+	val = table->start;	
+	pthread_mutex_unlock(&table->start_mut);
+	return (val);
+}
+
+int	ph_increment_eat(t_philo *self, int v)
+{
+	
 	
 }

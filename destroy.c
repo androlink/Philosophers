@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 01:10:03 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/11 16:29:50 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/12 22:10:19 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ int	destroy_philos(t_philo *philo, int count);
 
 int	destroy_table(t_table *table)
 {
-	destroy_forks(table->forks, table->forks_number);
-	destroy_philos(table->philosophers, table->phi_number);
+	destroy_forks(table->forks, table->number);
+	destroy_philos(table->philosophers, table->number);
 	free(table->forks);
 	free(table->philosophers);
-	pthread_mutex_destroy(&table->p_mut);
+	pthread_mutex_destroy(&table->stop_mut);
+	pthread_mutex_destroy(&table->start_mut);
 	return (1);
 }
 
@@ -45,7 +46,7 @@ int	destroy_philos(t_philo *philo, int count)
 	i = 0;
 	while (philo && i < count && philo[i].id)
 	{
-		//pthread_detach(philo[i].thread);
+		pthread_mutex_destroy(&philo[i]._mut);
 		i++;
 	}
 	return (0);
