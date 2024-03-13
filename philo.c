@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 05:55:27 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/12 21:41:23 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/13 00:51:31 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int	main(int ac, char **av)
 		quit(bad_arg);
 	if (!init_table(&table, ac, av))
 		quit(init_failed);
-	if (code == good_exit)
-		god(&table);
+	god(&table);
 	destroy_table(&table);
 	quit(code);
 	

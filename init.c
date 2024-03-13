@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 23:34:47 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/12 22:09:31 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/13 00:29:01 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	init_table(t_table	*table, int ac, char **av)
 	n = ft_atoi(av[1]);
 	memset(table, '\0', sizeof(t_table));
 	table->number = n;
-	if (get_times(table, ac, av) == 0)
+	if (n < 0 || get_times(table, ac, av) == 0)
 		return (0);
 	if (pthread_mutex_init(&table->stop_mut, NULL))
 		return (0);
@@ -41,7 +41,7 @@ int	get_times(t_table	*table, int ac, char **av)
 		table->eat_count = ft_atoi(av[5]);
 	else
 		table->eat_count = __LONG_MAX__;
-	if (table->time_to_die < 0 || table->time_to_eat < 0 || table->number < 0
+	if (table->time_to_die < 0 || table->time_to_eat < 0
 		|| table->time_to_sleep < 0 || table->eat_count < 0)
 		return (0);
 	return (1);

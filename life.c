@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:34:50 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/12 20:29:00 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/12 23:38:23 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ int	is_dead(t_philosopher *self)
 void	*born(t_philosopher *self)
 {
 	struct timeval	tmp;
-DEBUG_PRINT
+
 	while (check_start(self->table) == 0)
-	{DEBUG_PRINT
+	{
 		if (check_stop(self->table) == 1)
 			return (NULL);
-	}DEBUG_PRINT
+	}
 	ph_life(self);
 	if (self->is_dead == 1)
 	{

@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 03:34:01 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/12 22:11:32 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/13 01:04:25 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	give_life(t_philosopher *phi, int count)
 	while (i < count)
 	{
 		if(pthread_create(&phi[i].thread, NULL, (void *(*)(void *))&born, &phi[i]))
-			return (1);
+			return (i);
 		i++;
 	}
-	return (0);
+	return (i);
 }
 
 int	take_life(t_philosopher *phi, int count)
@@ -70,17 +70,20 @@ int	manage_life(t_table *table)
 int	god(t_table *table)
 {
 	struct timeval	tmp;
+	int				i;
 
 	gettimeofday(&tmp, NULL);
 	table->start = 0;
 	table->stop = 0;
 	time_ref(0, to_long(tmp));
-	if (give_life(table->philosophers, table->number))
+	i = give_life(table->philosophers, table->number);
+	if (i != table->number)
 	{
 		pthread_mutex_lock(&table->stop_mut);
 		table->stop = 1;
 		pthread_mutex_unlock(&table->stop_mut);
-		printf("[GOD] : fail to give life\n");
+		//while (i--)
+		//	pthread_join(table->philosophers[i].thread, NULL);
 	}
 	else
 	{
@@ -89,8 +92,7 @@ int	god(t_table *table)
 		pthread_mutex_unlock(&table->start_mut);
 		manage_life(table);
 	}
-	if (take_life(table->philosophers, table->number))
-		printf("[GOD] : fail to take life\n");
+	take_life(table->philosophers, i);
 	return (0);
 }
 
