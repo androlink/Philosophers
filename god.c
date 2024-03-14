@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 03:34:01 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/13 01:04:25 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/14 01:09:35 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int	god(t_table *table)
 	gettimeofday(&tmp, NULL);
 	table->start = 0;
 	table->stop = 0;
-	time_ref(0, to_long(tmp));
 	i = give_life(table->philosophers, table->number);
 	if (i != table->number)
 	{
@@ -87,6 +86,7 @@ int	god(t_table *table)
 	}
 	else
 	{
+		time_ref(0, to_long(tmp));
 		pthread_mutex_lock(&table->start_mut);
 		table->start = 1;
 		pthread_mutex_unlock(&table->start_mut);

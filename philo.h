@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 05:55:30 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/13 00:47:46 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/14 01:06:00 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ int			pick_fork(t_fork *fork);
 int			is_dead(t_philosopher *self);
 int			check_stop(t_table *table);
 int			check_start(t_table *table);
+int			is_num(char *s);
+int			sleep_or_die(suseconds_t sleep_time, t_philo *self);
 
 int			god(t_table *table);
 void		ph_life(t_philosopher *me);

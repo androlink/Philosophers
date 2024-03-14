@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 00:27:13 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/12 17:32:30 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/14 01:08:00 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,19 @@ int	ft_atoi(const char *nptr)
 	return (res * s);
 }
 
+int	is_num(char *s)
+{
+	if (*s == '-' || *s == '+')
+		s++;
+	while (*s)
+	{
+		if (*s < '0' || *s > '9')
+			return (0);
+		s++;
+	}
+	return (1);
+}
+
 long	time_ref(long test, long set)
 {
 	static long	init;
@@ -53,24 +66,17 @@ long	to_long(struct timeval t1)
 	return (t1.tv_sec * 1000000 + t1.tv_usec);
 }
 
-int	pick_fork(t_fork *fork)
+int	sleep_or_die(suseconds_t sleep_time, t_philo *self)
 {
-	int	res;
+	struct timeval	t;
+	suseconds_t	stop_time;
 
-	res = 0;
-	pthread_mutex_lock(&fork->_mut);
-	if (fork->_lock == 0)
+	gettimeofday(&t, NULL);
+	stop_time = to_long(t) + sleep_time;
+	while(to_long(t) < stop_time && !is_dead(self))
 	{
-		fork->_lock = 1;
-		res = 1;
+		usleep(500);
+		gettimeofday(&t, NULL);
 	}
-	pthread_mutex_unlock(&fork->_mut);
-	return (res);
-}
-
-void	drop_fork(t_fork *fork)
-{
-	pthread_mutex_lock(&fork->_mut);
-	fork->_lock = 0;
-	pthread_mutex_unlock(&fork->_mut);
+	return (is_dead(self));
 }

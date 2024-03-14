@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:34:50 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/12 23:38:23 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/14 01:11:09 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	is_dead(t_philosopher *self)
 	gettimeofday(&tmp, NULL);
 	if ((to_long(tmp)) > self->life_time)
 	{
-		if (check_stop(self->table) == 0)
-			self->is_dead = 1;
 		pthread_mutex_lock(&self->table->stop_mut);
+		if (self->table->stop == 0)
+			self->is_dead = 1;
 		*self->stop = 1;
 		pthread_mutex_unlock(&self->table->stop_mut);
 	}

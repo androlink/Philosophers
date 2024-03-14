@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 23:34:47 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/13 00:29:01 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/13 21:14:46 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	init_table(t_table	*table, int ac, char **av)
 {
 	int	n;
 
-	n = ft_atoi(av[1]);
 	memset(table, '\0', sizeof(t_table));
+	n = ft_atoi(av[1]) | (!is_num(av[1])) << 31;
 	table->number = n;
 	if (n < 0 || get_times(table, ac, av) == 0)
 		return (0);
@@ -34,11 +34,11 @@ int	init_table(t_table	*table, int ac, char **av)
 
 int	get_times(t_table	*table, int ac, char **av)
 {
-	table->time_to_die = ft_atoi(av[2]) * 1000;
-	table->time_to_eat = ft_atoi(av[3]) * 1000;
-	table->time_to_sleep = ft_atoi(av[4]) * 1000;
+	table->time_to_die = ft_atoi(av[2]) * 1000 | ((long)!is_num(av[2])) << 63;
+	table->time_to_eat = ft_atoi(av[3]) * 1000 | ((long)!is_num(av[3])) << 63;
+	table->time_to_sleep = ft_atoi(av[4]) * 1000 | ((long)!is_num(av[4])) << 63;
 	if (ac == 6)
-		table->eat_count = ft_atoi(av[5]);
+		table->eat_count = ft_atoi(av[5]) | (long)is_num(av[5]) << 63;
 	else
 		table->eat_count = __LONG_MAX__;
 	if (table->time_to_die < 0 || table->time_to_eat < 0
