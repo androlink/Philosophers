@@ -15,13 +15,14 @@
 int	init_forks(t_fork **forks, int count);
 int	init_philos(t_table	*table, int count);
 int	get_times(t_table	*table, int ac, char **av);
+int	get_pos_num(char *str);
 
 int	init_table(t_table	*table, int ac, char **av)
 {
 	int	n;
 
 	memset(table, '\0', sizeof(t_table));
-	n = ft_atoi(av[1]) | (!is_num(av[1])) << 31;
+	n = get_pos_num(av[1]);
 	table->number = n;
 	if (n < 0 || get_times(table, ac, av) == 0)
 		return (0);
@@ -32,13 +33,22 @@ int	init_table(t_table	*table, int ac, char **av)
 	return (init_forks(&table->forks, n) && init_philos(table, n));
 }
 
+int	get_pos_num(char *str)
+{
+	if (str[0] == '-')
+		return (-1);
+	if (!is_num(str))
+		return (-1);
+	return (ft_atoi(str));
+}
+
 int	get_times(t_table	*table, int ac, char **av)
 {
-	table->time_to_die = ft_atoi(av[2]) * 1000 | ((long)!is_num(av[2])) << 63;
-	table->time_to_eat = ft_atoi(av[3]) * 1000 | ((long)!is_num(av[3])) << 63;
-	table->time_to_sleep = ft_atoi(av[4]) * 1000 | ((long)!is_num(av[4])) << 63;
+	table->time_to_die = get_pos_num(av[2]) * 1000;
+	table->time_to_eat = get_pos_num(av[3]) * 1000;
+	table->time_to_sleep = get_pos_num(av[4]) * 1000;
 	if (ac == 6)
-		table->eat_count = ft_atoi(av[5]) | (long)is_num(av[5]) << 63;
+		table->eat_count = get_pos_num(av[5]);
 	else
 		table->eat_count = __LONG_MAX__;
 	if (table->time_to_die < 0 || table->time_to_eat < 0

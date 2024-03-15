@@ -35,5 +35,5 @@ int	check_start(t_table *table)
 int	ph_increment_eat(t_philo *self, int v)
 {
 	
-	
+	return (1);
 }

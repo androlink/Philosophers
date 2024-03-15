@@ -22,14 +22,14 @@
 # include <unistd.h>
 
 #define DEBUG_PRINT printf("file %s line %d\n", __FILE__, __LINE__);
-
+/*
 int my_pthread_create(pthread_t *__restrict__ __newthread, const pthread_attr_t *__restrict__ __attr, void *(*__start_routine)(void *), void *__restrict__ __arg);
 #define pthread_create my_pthread_create
 int my_pthread_mutex_init(pthread_mutex_t *__mutex, const pthread_mutexattr_t *__mutexattr);
 #define pthread_mutex_init my_pthread_mutex_init
 void *my_malloc(size_t s);
 #define malloc(x) my_malloc(x)
-
+*/
 typedef	enum e_exit_code
 {
 	good_exit,
