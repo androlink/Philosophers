@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:34:50 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/14 01:11:09 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/16 13:33:38 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,8 @@ void	*born(t_philosopher *self)
 	struct timeval	tmp;
 
 	while (check_start(self->table) == 0)
-	{
 		if (check_stop(self->table) == 1)
 			return (NULL);
-	}
 	ph_life(self);
 	if (self->is_dead == 1)
 	{
