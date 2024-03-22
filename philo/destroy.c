@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 01:10:03 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/12 22:10:19 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/19 17:40:04 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	destroy_table(t_table *table)
 	free(table->philosophers);
 	pthread_mutex_destroy(&table->stop_mut);
 	pthread_mutex_destroy(&table->start_mut);
+	pthread_mutex_destroy(&table->print_mut);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 23:34:47 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/13 21:14:46 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/19 17:39:50 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ int	init_table(t_table	*table, int ac, char **av)
 		return (0);
 	if (pthread_mutex_init(&table->start_mut, NULL))
 		return (pthread_mutex_destroy(&table->stop_mut), 0);
+	if (pthread_mutex_init(&table->print_mut, NULL))
+	{
+		pthread_mutex_destroy(&table->stop_mut);
+		pthread_mutex_destroy(&table->start_mut);
+		return (0);
+	}
 	return (init_forks(&table->forks, n) && init_philos(table, n));
 }
 

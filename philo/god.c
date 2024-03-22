@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 03:34:01 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/14 01:09:35 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/20 20:00:23 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	manage_life(t_table *table)
 
 	while (!check_stop(table))
 	{
+		usleep(500);
 		count = 0;
 		i = 0;
 		while (i < table->number)
@@ -70,25 +71,23 @@ int	manage_life(t_table *table)
 int	god(t_table *table)
 {
 	struct timeval	tmp;
-	int				i;
+	size_t			i;
 
-	gettimeofday(&tmp, NULL);
-	table->start = 0;
 	table->stop = 0;
+	pthread_mutex_lock(&table->start_mut);
 	i = give_life(table->philosophers, table->number);
 	if (i != table->number)
 	{
 		pthread_mutex_lock(&table->stop_mut);
 		table->stop = 1;
 		pthread_mutex_unlock(&table->stop_mut);
-		//while (i--)
-		//	pthread_join(table->philosophers[i].thread, NULL);
+		pthread_mutex_unlock(&table->start_mut);
 	}
 	else
 	{
+		sleep(1);
+		gettimeofday(&tmp, NULL);
 		time_ref(0, to_long(tmp));
-		pthread_mutex_lock(&table->start_mut);
-		table->start = 1;
 		pthread_mutex_unlock(&table->start_mut);
 		manage_life(table);
 	}
