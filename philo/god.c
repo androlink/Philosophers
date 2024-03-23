@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 03:34:01 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/20 20:00:23 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/23 22:43:39 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	manage_life(t_table *table)
 
 	while (!check_stop(table))
 	{
-		usleep(500);
+		usleep(100 * table->number);
 		count = 0;
 		i = 0;
 		while (i < table->number)
@@ -85,10 +85,11 @@ int	god(t_table *table)
 	}
 	else
 	{
-		sleep(1);
+		usleep(100);
 		gettimeofday(&tmp, NULL);
 		time_ref(0, to_long(tmp));
 		pthread_mutex_unlock(&table->start_mut);
+		usleep(1000);
 		manage_life(table);
 	}
 	take_life(table->philosophers, i);

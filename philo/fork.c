@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:18:06 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/20 00:40:56 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/23 21:57:47 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	pick_fork(t_fork *fork)
 {
-int	res;
+	int	res;
 
 	res = 0;
 	pthread_mutex_lock(&fork->_mut);

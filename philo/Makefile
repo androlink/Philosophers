@@ -1,7 +1,7 @@
 NAME = philo
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I . -l pthread #-fsanitize=thread -g
+CFLAGS = -Wall -Wextra -Werror -I . -l pthread -g #-fsanitize=thread
 DFLAGS = -MMD -MP
 
 SFLIES :=	activities.c \

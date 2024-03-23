@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 05:55:30 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/20 00:10:30 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/23 19:00:18 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int my_pthread_mutex_init(pthread_mutex_t *__mutex, const pthread_mutexattr_t *_
 void *my_malloc(size_t s);
 #define malloc(x) my_malloc(x)
 */
+
+# define PH_AT_TIME 50
 typedef	enum e_exit_code
 {
 	good_exit,
