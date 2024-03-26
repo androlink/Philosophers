@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 03:34:01 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/23 22:43:39 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/26 17:18:55 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,33 @@ int	take_life(t_philosopher *phi, int count)
 
 	i = 0;
 	while (i < count)
-	{
-		pthread_join(phi[i].thread, &nothing);
-		i++;
-	}
+		pthread_join(phi[i++].thread, &nothing);
 	return (0);
 }
 
+
+
 int	manage_life(t_table *table)
 {
-	size_t	count;
+	size_t	check;
 	size_t	i;
 
 	while (!check_stop(table))
 	{
-		usleep(100 * table->number);
-		count = 0;
+		usleep(table->time_to_die / 5);
+		check = 1;
 		i = 0;
 		while (i < table->number)
 		{
 			pthread_mutex_lock(&table->philosophers[i]._mut);
-			if (table->philosophers[i].eat_count >= table->eat_count)
-				count++;
+			if (table->philosophers[i].eat_count < table->eat_count)
+				check = 0;
 			pthread_mutex_unlock(&table->philosophers[i]._mut);
+			if (is_dead(&table->philosophers[i]))
+				break ;
 			i++;
 		}
-		if (count == i)
+		if (check == 1)
 		{
 			pthread_mutex_lock(&table->stop_mut);
 			table->stop = 1;
@@ -85,11 +86,10 @@ int	god(t_table *table)
 	}
 	else
 	{
-		usleep(100);
+		usleep(80 * table->number / 2);
 		gettimeofday(&tmp, NULL);
 		time_ref(0, to_long(tmp));
 		pthread_mutex_unlock(&table->start_mut);
-		usleep(1000);
 		manage_life(table);
 	}
 	take_life(table->philosophers, i);

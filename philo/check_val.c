@@ -6,11 +6,13 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:32:08 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/20 00:22:59 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/24 19:50:29 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+size_t stop_count = 0;
 
 int	check_stop(t_table *table)
 {
@@ -19,6 +21,7 @@ int	check_stop(t_table *table)
 	pthread_mutex_lock(&table->stop_mut);
 	val = table->stop;
 	pthread_mutex_unlock(&table->stop_mut);
+	stop_count++;
 	return (val);
 }
 

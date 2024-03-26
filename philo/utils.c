@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 00:27:13 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/23 22:02:13 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/24 19:59:10 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,15 @@ int	sleep_or_die(suseconds_t sleep_time, t_philo *self)
 {
 	struct timeval	t;
 	suseconds_t	stop_time;
+	(void) self;
 
 	gettimeofday(&t, NULL);
 	stop_time = to_long(t) + sleep_time;
 	while(to_long(t) < stop_time)
 	{
-		//usleep(PH_AT_TIME);
-		if (is_dead(self))
-			return (1);
+		usleep((stop_time - to_long(t)) / 2);
+		//if (check_stop(self->table) == 1)
+		//	return (1);
 		gettimeofday(&t, NULL);
 	}
 	return (0);

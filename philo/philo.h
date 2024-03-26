@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 05:55:30 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/23 19:00:18 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/24 19:54:27 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void *my_malloc(size_t s);
 #define malloc(x) my_malloc(x)
 */
 
-# define PH_AT_TIME 50
+# define PH_AT_SLEEP_TIME 1000
 typedef	enum e_exit_code
 {
 	good_exit,
