@@ -6,13 +6,12 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 05:55:27 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/24 19:51:34 by gcros            ###   ########.fr       */
+/*   Updated: 2024/04/25 01:36:53 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-extern size_t stop_count;
 /*
  * <number_of_philosophers>
  * <time_to_die>
@@ -25,7 +24,6 @@ int	main(int ac, char **av)
 	t_table		table;
 	t_exit_code	code;
 
-	write(1, "lol\n", 4);
 	code = good_exit;
 	if (ac != 5 && ac != 6)
 		quit(bad_arg);
@@ -33,6 +31,5 @@ int	main(int ac, char **av)
 		quit(init_failed);
 	god(&table);
 	destroy_table(&table);
-	printf("%lu\n", stop_count);
 	quit(code);
 }

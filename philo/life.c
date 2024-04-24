@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:34:50 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/24 20:09:10 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/27 02:43:09 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_dead(t_philosopher *self)
 {
 	struct timeval	tmp;
-	int res;
+	int				res;
 	t_table *const	_table = self->table;
 
 	res = 0;
@@ -31,7 +31,8 @@ int	is_dead(t_philosopher *self)
 		pthread_mutex_unlock(&_table->stop_mut);
 		pthread_mutex_lock(&_table->print_mut);
 		if (res == 1)
-			printf("%ld\t%d\t%s\n", time_ref(to_long(tmp), 0) / 1000, self->id, "died");
+			printf("%ld\t%d\t%s\n",
+				time_ref(to_long(tmp), 0) / 1000, self->id, "died");
 		pthread_mutex_unlock(&_table->print_mut);
 		return (1);
 	}
@@ -42,7 +43,7 @@ int	is_dead(t_philosopher *self)
 void	*born(t_philosopher *self)
 {
 	struct timeval	tmp;
-	t_table *const _table = self->table;
+	t_table *const	_table = self->table;
 
 	pthread_mutex_lock(&self->_mut);
 	pthread_mutex_lock(&_table->start_mut);
@@ -56,13 +57,13 @@ void	*born(t_philosopher *self)
 
 void	ph_call(char *msg, t_philo *self)
 {
-	struct timeval	tmp;
-	pthread_mutex_t *const _tmp = &self->table->print_mut;
+	struct timeval			tmp;
+	pthread_mutex_t *const	_tmp = &self->table->print_mut;
 
 	pthread_mutex_lock(_tmp);
 	gettimeofday(&tmp, NULL);
 	if (!check_stop(self->table))
-		//printf("%5ld.%.3ld\t%d\t%s\n", time_ref(to_long(tmp), 0) / 1000, time_ref(to_long(tmp), 0) % 1000, self->id, msg);
-		printf("%ld\t%d\t%s\n", time_ref(to_long(tmp), 0) / 1000, self->id, msg);
+		printf("%ld\t%d\t%s\n",
+			time_ref(to_long(tmp), 0) / 1000, self->id, msg);
 	pthread_mutex_unlock(_tmp);
 }

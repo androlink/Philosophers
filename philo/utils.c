@@ -6,11 +6,10 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 00:27:13 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/24 19:59:10 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/28 01:20:53 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/time.h>
 #include "philo.h"
 
 int	ft_atoi(const char *nptr)
@@ -66,19 +65,16 @@ long	to_long(struct timeval t1)
 	return (t1.tv_sec * 1000000 + t1.tv_usec);
 }
 
-int	sleep_or_die(suseconds_t sleep_time, t_philo *self)
+int	sleep_or_die(suseconds_t sleep_time)
 {
 	struct timeval	t;
-	suseconds_t	stop_time;
-	(void) self;
+	suseconds_t		stop_time;
 
 	gettimeofday(&t, NULL);
 	stop_time = to_long(t) + sleep_time;
-	while(to_long(t) < stop_time)
+	while (to_long(t) / 1000 < stop_time / 1000)
 	{
 		usleep((stop_time - to_long(t)) / 2);
-		//if (check_stop(self->table) == 1)
-		//	return (1);
 		gettimeofday(&t, NULL);
 	}
 	return (0);

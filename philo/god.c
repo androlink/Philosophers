@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 03:34:01 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/26 17:18:55 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/27 02:50:24 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	give_life(t_philosopher *phi, int count)
 	i = 0;
 	while (i < count)
 	{
-		if(pthread_create(&phi[i].thread, NULL, (void *(*)(void *))&born, &phi[i]))
+		if (pthread_create(&phi[i].thread, NULL,
+				(void *(*)(void *)) & born, &phi[i]))
 			return (i);
 		i++;
 	}
@@ -37,8 +38,6 @@ int	take_life(t_philosopher *phi, int count)
 	return (0);
 }
 
-
-
 int	manage_life(t_table *table)
 {
 	size_t	check;
@@ -46,10 +45,10 @@ int	manage_life(t_table *table)
 
 	while (!check_stop(table))
 	{
-		usleep(table->time_to_die / 5);
+		usleep(10);
 		check = 1;
-		i = 0;
-		while (i < table->number)
+		i = -1;
+		while (++i < table->number)
 		{
 			pthread_mutex_lock(&table->philosophers[i]._mut);
 			if (table->philosophers[i].eat_count < table->eat_count)
@@ -57,7 +56,6 @@ int	manage_life(t_table *table)
 			pthread_mutex_unlock(&table->philosophers[i]._mut);
 			if (is_dead(&table->philosophers[i]))
 				break ;
-			i++;
 		}
 		if (check == 1)
 		{
@@ -95,4 +93,3 @@ int	god(t_table *table)
 	take_life(table->philosophers, i);
 	return (0);
 }
-
