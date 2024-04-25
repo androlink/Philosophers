@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 00:14:29 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/11 16:08:30 by gcros            ###   ########.fr       */
+/*   Updated: 2024/04/25 03:10:23 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,18 @@
 
 void	quit(t_exit_code code)
 {
-	printf("%s\n", str_quit(code));
+	const char	*str;
+	size_t		i;
+
+	if (code != 0)
+	{
+		i = 0;
+		str = str_quit(code);
+		while (str[i])
+			i++;
+		write(2, str, i);
+		write(2, "\n", 1);
+	}
 	exit(code);
 }
 
