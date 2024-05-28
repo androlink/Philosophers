@@ -1,7 +1,8 @@
 NAME = philo
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I . -l pthread -g #-fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -I . -g #-fsanitize=thread
+LFLAGS = -l pthread 
 DFLAGS = -MMD -MP
 
 SFLIES :=	activities.c \
@@ -21,7 +22,7 @@ OFILES = $(SFLIES:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OFILES)
-	$(CC) -o $@ $(CFLAGS) $(DFLAGS) $(OFILES)
+	$(CC) -o $@ $(CFLAGS) $(DFLAGS) $(OFILES) $(LFLAGS)
 
 -include $(DFILES)
 
