@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 05:55:30 by gcros             #+#    #+#             */
-/*   Updated: 2024/04/25 01:49:03 by gcros            ###   ########.fr       */
+/*   Updated: 2024/05/07 04:57:34 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_table
 	pthread_mutex_t	print_mut;
 }	t_table;
 
-void		quit(t_exit_code code);
+int			quit(t_exit_code code);
 const char	*str_quit(t_exit_code code);
 int			init_table(t_table	*table, int ac, char **av);
 int			destroy_table(t_table *table);

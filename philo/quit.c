@@ -6,13 +6,13 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 00:14:29 by gcros             #+#    #+#             */
-/*   Updated: 2024/05/07 04:55:17 by gcros            ###   ########.fr       */
+/*   Updated: 2024/05/07 04:57:24 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	quit(t_exit_code code)
+int	quit(t_exit_code code)
 {
 	const char	*str;
 	size_t		i;
@@ -26,7 +26,7 @@ void	quit(t_exit_code code)
 		write(2, str, i);
 		write(2, "\n", 1);
 	}
-	exit(code);
+	return (code);
 }
 
 const char	*str_quit(t_exit_code code)
