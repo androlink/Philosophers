@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 05:55:30 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/23 19:00:18 by gcros            ###   ########.fr       */
+/*   Updated: 2024/04/25 01:49:03 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,9 @@
 # include <errno.h>
 # include <unistd.h>
 
-#define DEBUG_PRINT printf("file %s line %d\n", __FILE__, __LINE__);
-/*
-int my_pthread_create(pthread_t *__restrict__ __newthread, const pthread_attr_t *__restrict__ __attr, void *(*__start_routine)(void *), void *__restrict__ __arg);
-#define pthread_create my_pthread_create
-int my_pthread_mutex_init(pthread_mutex_t *__mutex, const pthread_mutexattr_t *__mutexattr);
-#define pthread_mutex_init my_pthread_mutex_init
-void *my_malloc(size_t s);
-#define malloc(x) my_malloc(x)
-*/
+# define PH_AT_SLEEP_TIME 1000
 
-# define PH_AT_TIME 50
-typedef	enum e_exit_code
+typedef enum e_exit_code
 {
 	good_exit,
 	bad_arg,
@@ -48,24 +39,25 @@ typedef struct s_fork
 
 typedef struct s_table	t_table;
 
+typedef union u_hands
+{
+	struct
+	{
+		t_fork	*left_hand;
+		t_fork	*right_hand;
+	};
+	t_fork	*forks[2];
+}	t_hands;
 typedef struct s_philosopher
 {
-	int			id;
-	union
-	{
-		struct
-		{
-			t_fork		*left_hand;
-			t_fork		*right_hand;
-		};
-		t_fork	*forks[2];
-	};
-	long		eat_count;
-	suseconds_t	life_time;
-	pthread_t	thread;
-	int			is_dead;
-	int			*stop;
-	t_table		*table;
+	int				id;
+	long			eat_count;
+	suseconds_t		life_time;
+	pthread_t		thread;
+	int				is_dead;
+	int				*stop;
+	t_table			*table;
+	t_hands			hands;
 	pthread_mutex_t	_mut;
 } t_philosopher, t_phi,	t_philo;
 
@@ -93,15 +85,13 @@ int			destroy_table(t_table *table);
 int			ft_atoi(const char *nptr);
 long		to_long(struct timeval t1);
 void		*born(t_philosopher *self);
-void		fuck_it_him_out(t_philo	*self, long time);
 long		time_ref(long test, long set);
 void		drop_fork(t_fork *fork);
 int			pick_fork(t_fork *fork);
 int			is_dead(t_philosopher *self);
 int			check_stop(t_table *table);
-int			check_start(t_table *table);
 int			is_num(char *s);
-int			sleep_or_die(suseconds_t sleep_time, t_philo *self);
+int			sleep_or_die(suseconds_t sleep_time);
 void		ph_call(char *msg, t_philo *self);
 
 int			god(t_table *table);

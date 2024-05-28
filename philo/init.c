@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 23:34:47 by gcros             #+#    #+#             */
-/*   Updated: 2024/03/19 17:39:50 by gcros            ###   ########.fr       */
+/*   Updated: 2024/03/27 02:49:18 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,9 @@ int	init_philos(t_table	*table, int count)
 	{
 		if (pthread_mutex_init(&table->philosophers[i]._mut, NULL))
 			return (0);
-		table->philosophers[i].left_hand = &table->forks[i];
-		table->philosophers[i].right_hand = &table->forks[(i + 1) % count];
+		table->philosophers[i].hands.left_hand = &table->forks[i];
+		table->philosophers[i].hands.right_hand = &table->forks[(i + 1) % count]
+			;
 		table->philosophers[i].stop = &table->stop;
 		table->philosophers[i].table = table;
 		table->philosophers[i].id = i + 1;
